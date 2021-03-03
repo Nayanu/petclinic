@@ -6,27 +6,21 @@ pipeline {
 	tools {
 		maven 'M3.6'
 	}
-	stages {
-		stage('Checkout') {
-			steps{
-    			git 'https://github.com/Nayanu/petclinic.git'
-    		}
-		}
 		stage('Build') {
-			steps{
-    			sh "mvn clean package"
-    			echo "$CC"
-    		}
+				steps{
+    				sh "mvn clean package"
+    				echo "$CC"
+    			}
 		}
 		stage('Test Result') {
-			steps{
-				junit "target/surefire-reports/*.xml"
-			}
+				steps{
+					junit "target/surefire-reports/*.xml"
+				}
 		}
 		stage('Archive Artifact') {
-			steps{
-				archiveArtifacts artifacts: "target/*.?ar", followSymlinks: false
-			}
+				steps{
+					archiveArtifacts artifacts: "target/*.?ar", followSymlinks: false
+				}
 		}	
 	}
     post { 
