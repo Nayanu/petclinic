@@ -1,3 +1,4 @@
+
 pipeline {
 	agent any
 	environment {
@@ -7,23 +8,22 @@ pipeline {
 		maven 'M3.6'
 	}
 		stage('Build') {
-				steps{
-    				sh "mvn clean package"
-    				echo "$CC"
-    			}
+			steps{
+    			sh "mvn clean package"
+    			echo "$CC"
+    		}
 		}
-		stage('Test Result') {
+			stage('Test Result') {
 				steps{
 					junit "target/surefire-reports/*.xml"
-				}
+			}
 		}
 		stage('Archive Artifact') {
 				steps{
 					archiveArtifacts artifacts: "target/*.?ar", followSymlinks: false
-				}
+			}
 		}	
-	}
-    post { 
+	post { 
 		success {
 			notify('Success')
 		}
@@ -42,4 +42,3 @@ def notify(status) {
         """
     )
 }
-		
