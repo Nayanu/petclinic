@@ -1,4 +1,3 @@
-
 pipeline {
 	agent any
 	environment {
@@ -7,20 +6,22 @@ pipeline {
 	tools {
 		maven 'M3.6'
 	}
-		stage('Build') {
-			steps{
-    			sh "mvn clean package"
-    			echo "$CC"
-    		}
-		}
+	stages {
+			stage('Build') {
+				steps{
+    				sh "mvn clean package"
+    				echo "$CC"
+    			}
+			}
 			stage('Test Result') {
 				steps{
 					junit "target/surefire-reports/*.xml"
+				}
 			}
-		}
-		stage('Archive Artifact') {
+			stage('Archive Artifact') {
 				steps{
 					archiveArtifacts artifacts: "target/*.?ar", followSymlinks: false
+				}
 			}
 		}	
 	post { 
